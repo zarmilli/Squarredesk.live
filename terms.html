@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms & Conditions — Squarredesk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ease: cubic-bezier(.22,.8,.32,1);
+    --gold: #d4af62;
+    --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --font-heading: "Clarkson", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  @font-face{
+    font-family: "Clarkson";
+    src: url("/fonts/Clarkson-Regular.woff2") format("woff2"),
+         url("/fonts/Clarkson-Regular.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face{
+    font-family: "Clarkson";
+    src: url("/fonts/Clarkson-Medium.woff2") format("woff2"),
+         url("/fonts/Clarkson-Medium.woff") format("woff");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body{
+    margin:0;
+    background: #000;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6{
+    font-family: var(--font-heading);
+  }
+
+  /* ---------- Card Nav ---------- */
+  .card-nav-wrap{
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(920px, calc(100% - 32px));
+    z-index: 100;
+  }
+
+  .card-nav{
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px -20px rgba(0,0,0,0.7);
+    transition: background 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+
+    --surface: #f6f3ec;
+    --surface-2: #ffffff;
+    --ink: #16140f;
+    --muted: #71695a;
+    --border: rgba(0,0,0,0.08);
+    --accent: #9c7a2e;
+    --scrim-top: rgba(255,255,255,0.1);
+    --scrim-bottom: rgba(20,17,10,0.82);
+    --panel-ink: #f5f3ee;
+    --panel-muted: #d8d3c5;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+
+  .card-nav-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height: 64px;
+    padding: 0 12px 0 20px;
+  }
+
+  .cn-logo{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    font-size: 15px;
+    color: var(--ink);
+    user-select:none;
+  }
+  .cn-logo-mark{
+    width: 26px;
+    height: 26px;
+    border-radius: 7px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .cn-actions{
+    display:flex;
+    align-items:center;
+    gap: 8px;
+  }
+
+  .cn-cta{
+    appearance:none;
+    border: 1px solid var(--accent);
+    background: transparent;
+    color: var(--accent);
+    padding: 9px 18px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition: background 0.25s var(--ease), color 0.25s var(--ease);
+    white-space: nowrap;
+  }
+  .cn-cta:hover{ background: var(--accent); color: var(--surface); }
+
+  .cn-toggle{
+    appearance:none;
+    border: none;
+    background: var(--surface-2);
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor: pointer;
+    position: relative;
+  }
+  .cn-toggle .bar{
+    position:absolute;
+    width: 16px;
+    height: 1.5px;
+    background: var(--ink);
+    border-radius: 2px;
+    transition: transform 0.4s var(--ease);
+  }
+  .cn-toggle .bar:nth-child(1){ transform: translateY(-4px); }
+  .cn-toggle .bar:nth-child(2){ transform: translateY(4px); }
+  .card-nav.open .cn-toggle .bar:nth-child(1){ transform: translateY(0) rotate(45deg); }
+  .card-nav.open .cn-toggle .bar:nth-child(2){ transform: translateY(0) rotate(-45deg); }
+
+  .cn-panel{
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.55s var(--ease);
+  }
+  .card-nav.open .cn-panel{ grid-template-rows: 1fr; }
+  .cn-panel-inner{ min-height: 0; overflow: hidden; }
+
+  .cn-panel-content{
+    padding: 22px 20px 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    border-top: 1px solid var(--border);
+    margin-top: 4px;
+  }
+
+  .cn-col{
+    position: relative;
+    min-height: 190px;
+    border-radius: 14px;
+    padding: 16px 16px 18px;
+    overflow: hidden;
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
+    background-size: cover;
+    background-position: center;
+  }
+  .cn-col::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background: linear-gradient(180deg, var(--scrim-top) 0%, var(--scrim-bottom) 78%);
+  }
+  .cn-col-inner{ position:relative; z-index:1; }
+  .card-nav.open .cn-col{ opacity: 1; transform: translateY(0); }
+  .card-nav.open .cn-col:nth-child(1){ transition-delay: 0.08s; }
+  .card-nav.open .cn-col:nth-child(2){ transition-delay: 0.15s; }
+  .card-nav.open .cn-col:nth-child(3){ transition-delay: 0.22s; }
+
+  .cn-col-label{
+    font-family: var(--font-heading);
+    color: var(--gold);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .cn-link{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    gap: 8px;
+    color: var(--panel-ink);
+    text-decoration:none;
+    font-size: 14.5px;
+    padding: 5px 0;
+  }
+  .cn-link span.arrow{
+    color: var(--panel-muted);
+    font-size: 14px;
+    transition: transform 0.25s var(--ease), color 0.25s var(--ease);
+  }
+  .cn-link:hover{ color: #fff; }
+  .cn-link:hover span.arrow{ color: var(--gold); transform: translate(3px, -3px); }
+
+  @media (max-width: 640px){
+    .cn-panel-content{ grid-template-columns: 1fr; }
+    .cn-cta{ display:none; }
+  }
+
+  /* ---------- Legal content ---------- */
+  .legal-section{
+    padding: 200px 24px 120px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .legal-container{
+    max-width: 760px;
+    width: 100%;
+  }
+
+  .legal-title{
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #f5f3ee;
+    margin: 0 0 28px;
+  }
+
+  .legal-intro{
+    font-family: var(--font-body);
+    font-size: 15.5px;
+    line-height: 1.75;
+    color: rgba(245,243,238,0.6);
+    margin: 0 0 16px;
+  }
+
+  .legal-container h4{
+    font-size: 20px;
+    font-weight: 700;
+    color: #f5f3ee;
+    margin: 56px 0 20px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .legal-container h4:first-of-type{
+    border-top: none;
+    padding-top: 0;
+    margin-top: 48px;
+  }
+
+  .legal-list{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .legal-list li{
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.75;
+    color: rgba(245,243,238,0.65);
+    margin-bottom: 18px;
+  }
+  .legal-list strong{
+    color: #f5f3ee;
+    font-weight: 600;
+  }
+
+  /* ---------- Footer ---------- */
+  .site-footer{
+    background: #000;
+    padding: 90px 40px 0;
+    overflow: hidden;
+  }
+  .footer-columns{
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr 1fr;
+    gap: 32px;
+    max-width: 1200px;
+    margin: 0 auto 90px;
+  }
+  .footer-brand-title{
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    color: #f5f3ee;
+    margin: 0;
+  }
+  .footer-col-label{
+    font-family: var(--font-heading);
+    color: var(--gold);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .footer-link{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    color: #f5f3ee;
+    text-decoration: none;
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    padding: 6px 0;
+    max-width: 160px;
+  }
+  .footer-link .arrow{
+    color: rgba(245,243,238,0.4);
+    font-size: 14px;
+    transition: transform 0.25s var(--ease), color 0.25s var(--ease);
+  }
+  .footer-link:hover{ color: var(--gold); }
+  .footer-link:hover .arrow{ color: var(--gold); transform: translate(3px, -3px); }
+
+  .footer-wordmark{
+    width: 100%;
+    font-weight: 700;
+    font-size: 16vw;
+    line-height: 0.8;
+    text-align: center;
+    letter-spacing: -0.02em;
+    background: linear-gradient(to top, transparent, #ffffff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 900px){
+    .footer-columns{ grid-template-columns: 1fr; gap: 40px; text-align: left; }
+    .footer-link{ max-width: none; justify-content: flex-start; }
+    .footer-link .arrow{ margin-left: 8px; }
+    .footer-wordmark{ font-size: 20vw; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .card-nav *, .card-nav{ transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card-nav-wrap">
+  <nav class="card-nav" id="cardNav">
+    <div class="card-nav-top">
+      <div class="cn-logo">
+        <img src="logo.png" alt="Squarre" class="cn-logo-mark">
+        Squarre
+      </div>
+      <div class="cn-actions">
+        <button class="cn-cta">Get started</button>
+        <button class="cn-toggle" id="cnToggle" aria-label="Toggle menu" aria-expanded="false">
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="cn-panel">
+      <div class="cn-panel-inner">
+        <div class="cn-panel-content">
+          <div class="cn-col" style="background-image:url('images/product.jpg')">
+            <div class="cn-col-inner">
+              <div class="cn-col-label">Product</div>
+              <a class="cn-link" href="#">Overview <span class="arrow">↗</span></a>
+              <a class="cn-link" href="#">Pricing <span class="arrow">↗</span></a>
+              <a class="cn-link" href="#">Changelog <span class="arrow">↗</span></a>
+            </div>
+          </div>
+          <div class="cn-col" style="background-image:url('images/company.jpg')">
+            <div class="cn-col-inner">
+              <div class="cn-col-label">Company</div>
+              <a class="cn-link" href="#">About <span class="arrow">↗</span></a>
+              <a class="cn-link" href="#">Careers <span class="arrow">↗</span></a>
+              <a class="cn-link" href="#">Contact <span class="arrow">↗</span></a>
+            </div>
+          </div>
+          <div class="cn-col" style="background-image:url('images/resources.jpg')">
+            <div class="cn-col-inner">
+              <div class="cn-col-label">Resources</div>
+              <a class="cn-link" href="#">Docs <span class="arrow">↗</span></a>
+              <a class="cn-link" href="#">Blog <span class="arrow">↗</span></a>
+              <a class="cn-link" href="#">Support <span class="arrow">↗</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<main>
+  <section class="legal-section" data-theme="dark">
+    <div class="legal-container">
+      <h1 class="legal-title">Terms & Conditions</h1>
+
+      <p class="legal-intro">This Squarredesk Terms of Service ("Agreement") is entered into by and between Squarredesk ("Squarredesk") and the entity or person accessing the Services ("Customer"). This Agreement consists of the terms and conditions set forth below and any asset access. The "Effective Date" of this Agreement is the date which is the earlier of (a) Customer's initial access to the Services through any online provisioning, registration or signup process or (b) the Effective Date of the first signup. This Agreement will govern Customer's initial purchase on the Effective Date as well as any future purchases made by Customer that reference this Agreement. Squarredesk may modify this Agreement from time to time as permitted in Section 13.4 (Amendment).</p>
+
+      <p class="legal-intro">Capitalized terms shall have the meanings set forth in Section 1, or in the section where they are first used.</p>
+
+      <h4>1. Definitions</h4>
+      <ul class="legal-list">
+        <li><strong>1.1 "Authorized Devices"</strong> means those mobile, desktop, or other devices with which the Services can be accessed and used.</li>
+        <li><strong>1.2 "Content"</strong> means code, content, fonts, graphics, designs, documents, or materials created using the Services by Customer and its Users or imported into the Services by Customer and its Users.</li>
+        <li><strong>1.3 "Documentation"</strong> means the technical materials made available by Squarredesk to Customer and/or its Users in hard copy or electronic form describing the use and operation of the Services.</li>
+        <li><strong>1.4 "Services"</strong> Squarredesk's proprietary web-based products and services, along with downloadable desktop and mobile apps. Each Order Form will identify details of Customer's Services subscription.</li>
+        <li><strong>1.5 "Order Form"</strong> means a document signed by both Parties identifying the Enterprise Services to be made available by Squarredesk pursuant to this Agreement.</li>
+        <li><strong>1.6 "Packages" or "Components"</strong> means add-on modules made available within the Services. Packages and Components may be created by Squarredesk, Customer or other third parties. Packages and Components created by Squarredesk are supported as part of the Services. Squarredesk will use reasonable efforts to support Customer's use of Packages and Components created by third parties but disclaims all warranties as to such Packages and Components.</li>
+        <li><strong>1.7 "User"</strong> means an employee, contractor or other individual associated with Customer who has been provisioned by Customer with access to the Services.</li>
+        <li><strong>1.8 "Services"</strong> means Squarredesk's SaaS product, web design software, tools, along with downloadable desktop and mobile apps. Each Order Form will identify details of Customer's subscription to the Services.</li>
+      </ul>
+
+      <h4>2. License and use rights</h4>
+      <ul class="legal-list">
+        <li><strong>2.1 Services</strong> — Squarredesk hereby grants Customer a non-exclusive, non-transferable license during the Term (as defined in Section 12) to: (a) use the Services and to download and install desktop or mobile applications as applicable on the number and type of Authorized Devices solely for Customer's internal business purposes in accordance with the Documentation, and/or (b) use our SaaS product, hosted systems, design software, tools, and build websites under the Squarredesk.app domain. The Services are delivered electronically.</li>
+        <li><strong>2.2 Provisioning the Services</strong> — Squarredesk will provide to Customer the necessary passwords, security protocols, policies, network links or connections ("Access Protocols") to allow Customer and its Users to access the Services as described herein; no other access to the website or servers from which the Services are delivered is permitted. Customer will provision its Users to access and use the features and functions of the Services through the Access Protocols. Customer may select one or more Users to act as administrators and control, manage and use the Services on Customer's behalf. Customer shall be responsible for all acts and omissions of its Users.</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" data-theme="dark">
+  <div class="footer-columns">
+    <div class="footer-col footer-col-brand">
+      <h3 class="footer-brand-title">Dream it,<br>Build it</h3>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-label">Product</div>
+      <a class="footer-link" href="#">Overview <span class="arrow">↗</span></a>
+      <a class="footer-link" href="#">Pricing <span class="arrow">↗</span></a>
+      <a class="footer-link" href="#">Changelog <span class="arrow">↗</span></a>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-label">Company</div>
+      <a class="footer-link" href="#">About <span class="arrow">↗</span></a>
+      <a class="footer-link" href="#">Careers <span class="arrow">↗</span></a>
+      <a class="footer-link" href="#">Contact <span class="arrow">↗</span></a>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-label">Resources</div>
+      <a class="footer-link" href="#">Docs <span class="arrow">↗</span></a>
+      <a class="footer-link" href="#">Blog <span class="arrow">↗</span></a>
+      <a class="footer-link" href="#">Support <span class="arrow">↗</span></a>
+    </div>
+  </div>
+
+  <div class="footer-wordmark">SQUARREDESK</div>
+</footer>
+
+<script>
+  const nav = document.getElementById('cardNav');
+  const toggle = document.getElementById('cnToggle');
+
+  toggle.addEventListener('click', () => {
+    const isOpen = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+</script>
+
+</body>
+</html>

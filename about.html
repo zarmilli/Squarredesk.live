@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Squarredesk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ease: cubic-bezier(.22,.8,.32,1);
+    --gold: #d4af62;
+    --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --font-heading: "Clarkson", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  @font-face{
+    font-family: "Clarkson";
+    src: url("/fonts/Clarkson-Regular.woff2") format("woff2"),
+         url("/fonts/Clarkson-Regular.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face{
+    font-family: "Clarkson";
+    src: url("/fonts/Clarkson-Medium.woff2") format("woff2"),
+         url("/fonts/Clarkson-Medium.woff") format("woff");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body{
+    margin:0;
+    background: #f9f7f2;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6{
+    font-family: var(--font-heading);
+  }
+
+  /* ---------- Card Nav ---------- */
+  .card-nav-wrap{
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(920px, calc(100% - 32px));
+    z-index: 100;
+  }
+
+  .card-nav{
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px -20px rgba(0,0,0,0.7);
+    transition: background 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+
+    --surface: #121212;
+    --surface-2: #1b1b1b;
+    --ink: #f5f3ee;
+    --muted: #948f83;
+    --border: rgba(255,255,255,0.08);
+    --accent: var(--gold);
+    --scrim-top: rgba(0,0,0,0.15);
+    --scrim-bottom: rgba(0,0,0,0.85);
+    --panel-ink: #f5f3ee;
+    --panel-muted: #cfcabd;
+
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+
+  .card-nav-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height: 64px;
+    padding: 0 12px 0 20px;
+  }
+
+  .cn-logo{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    font-size: 15px;
+    color: var(--ink);
+    user-select:none;
+  }
+  .cn-logo-mark{
+    width: 26px;
+    height: 26px;
+    border-radius: 7px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .cn-actions{
+    display:flex;
+    align-items:center;
+    gap: 8px;
+  }
+
+  .cn-cta{
+    appearance:none;
+    border: 1px solid var(--accent);
+    background: transparent;
+    color: var(--accent);
+    padding: 9px 18px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition: background 0.25s var(--ease), color 0.25s var(--ease);
+    white-space: nowrap;
+  }
+  .cn-cta:hover{ background: var(--accent); color: var(--surface); }
+
+  .cn-toggle{
+    appearance:none;
+    border: none;
+    background: var(--surface-2);
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor: pointer;
+    position: relative;
+  }
+  .cn-toggle .bar{
+    position:absolute;
+    width: 16px;
+    height: 1.5px;
+    background: var(--ink);
+    border-radius: 2px;
+    transition: transform 0.4s var(--ease);
+  }
+  .cn-toggle .bar:nth-child(1){ transform: translateY(-4px); }
+  .cn-toggle .bar:nth-child(2){ transform: translateY(4px); }
+  .card-nav.open .cn-toggle .bar:nth-child(1){ transform: translateY(0) rotate(45deg); }
+  .card-nav.open .cn-toggle .bar:nth-child(2){ transform: translateY(0) rotate(-45deg); }
+
+  .cn-panel{
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.55s var(--ease);
+  }
+  .card-nav.open .cn-panel{ grid-template-rows: 1fr; }
+  .cn-panel-inner{ min-height: 0; overflow: hidden; }
+
+  .cn-panel-content{
+    padding: 22px 20px 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    border-top: 1px solid var(--border);
+    margin-top: 4px;
+  }
+
+  .cn-col{
+    position: relative;
+    min-height: 190px;
+    border-radius: 14px;
+    padding: 16px 16px 18px;
+    overflow: hidden;
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
+    background-size: cover;
+    background-position: center;
+  }
+  .cn-col::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background: linear-gradient(180deg, var(--scrim-top) 0%, var(--scrim-bottom) 78%);
+  }
+  .cn-col-inner{ position:relative; z-index:1; }
+  .card-nav.open .cn-col{ opacity: 1; transform: translateY(0); }
+  .card-nav.open .cn-col:nth-child(1){ transition-delay: 0.08s; }
+  .card-nav.open .cn-col:nth-child(2){ transition-delay: 0.15s; }
+  .card-nav.open .cn-col:nth-child(3){ transition-delay: 0.22s; }
+
+  .cn-col-label{
+    font-family: var(--font-heading);
+    color: var(--gold);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .cn-link{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    gap: 8px;
+    color: var(--panel-ink);
+    text-decoration:none;
+    font-size: 14.5px;
+    padding: 5px 0;
+  }
+  .cn-link span.arrow{
+    color: var(--panel-muted);
+    font-size: 14px;
+    transition: transform 0.25s var(--ease), color 0.25s var(--ease);
+  }
+  .cn-link:hover{ color: #fff; }
+  .cn-link:hover span.arrow{ color: var(--gold); transform: translate(3px, -3px); }
+
+  @media (max-width: 640px){
+    .cn-panel-content{ grid-template-columns: 1fr; }
+    .cn-cta{ display:none; }
+  }
+
+  /* ---------- About: intro ---------- */
+  .about-intro{
+    padding: 200px 24px 60px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .about-intro-inner{
+    max-width: 620px;
+    text-align: right;
+  }
+  .about-title{
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #14110a;
+    margin: 0 0 20px;
+  }
+  .about-lede{
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.75;
+    color: rgba(20,17,10,0.6);
+    font-style: italic;
+    margin: 0;
+  }
+
+  /* ---------- About: image ---------- */
+  .about-image-wrap{
+    width: 60vw;
+    margin: 0 auto 100px;
+  }
+  .about-image-wrap img{
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 20px;
+  }
+
+  /* ---------- About: bio ---------- */
+  .about-bio{
+    max-width: 1120px;
+    margin: 0 auto 120px;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 60px;
+  }
+  .about-bio-title{
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    color: #14110a;
+    margin: 0;
+  }
+  .about-bio-desc{
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.85;
+    color: rgba(20,17,10,0.65);
+    margin: 0;
+  }
+
+  /* ---------- Skills ---------- */
+  .skills-section{
+    max-width: 1120px;
+    margin: 0 auto 140px;
+    padding: 0 24px;
+  }
+  .skills-title{
+    text-align: center;
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: #14110a;
+    margin: 0 0 56px;
+  }
+  .skills-grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+  }
+  .skills-col{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .skills-col span{
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: rgba(20,17,10,0.7);
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(20,17,10,0.1);
+  }
+
+  /* ---------- Templates ---------- */
+  .templates-section{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px 140px;
+    text-align: center;
+  }
+  .templates-title{
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: #14110a;
+    max-width: 560px;
+    margin: 0 auto 28px;
+  }
+  .templates-btn{
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    color: #f5f3ee;
+    background: #14110a;
+    text-decoration: none;
+    padding: 14px 30px;
+    border-radius: 12px;
+    margin-bottom: 64px;
+    transition: transform 0.25s var(--ease);
+  }
+  .templates-btn:hover{ transform: translateY(-2px); }
+
+  .templates-grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+  }
+
+  .template-item{
+    text-decoration: none;
+    display: block;
+  }
+
+  .template-card{
+    aspect-ratio: 16 / 9;
+    border-radius: 16px;
+    background-size: cover;
+    background-position: top center;
+    box-shadow: 0 20px 40px -20px rgba(20,17,10,0.3);
+    margin-bottom: 14px;
+  }
+
+  .template-name{
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #14110a;
+    transition: color 0.25s var(--ease);
+  }
+  .template-item:hover .template-name{ color: var(--gold); }
+
+  /* ---------- mobile ---------- */
+  @media (max-width: 900px){
+    .about-intro{ justify-content: center; }
+    .about-intro-inner{ text-align: center; }
+    .about-image-wrap{ width: 90vw; }
+    .about-bio{ grid-template-columns: 1fr; text-align: center; gap: 24px; }
+    .skills-grid{ grid-template-columns: repeat(2, 1fr); gap: 32px 24px; }
+    .templates-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ---------- Footer ---------- */
+  .site-footer{
+    background: #000;
+    padding: 90px 40px 0;
+    overflow: hidden;
+  }
+  .footer-columns{
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr 1fr;
+    gap: 32px;
+    max-width: 1200px;
+    margin: 0 auto 90px;
+  }
+  .footer-brand-title{
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    color: #f5f3ee;
+    margin: 0;
+  }
+  .footer-col-label{
+    font-family: var(--font-heading);
+    color: var(--gold);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .footer-link{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    color: #f5f3ee;
+    text-decoration: none;
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    padding: 6px 0;
+    max-width: 160px;
+  }
+  .footer-link .arrow{
+    color: rgba(245,243,238,0.4);
+    font-size: 14px;
+    transition: transform 0.25s var(--ease), color 0.25s var(--ease);
+  }
+  .footer-link:hover{ color: var(--gold); }
+  .footer-link:hover .arrow{ color: var(--gold); transform: translate(3px, -3px); }
+
+  .footer-wordmark{
+    width: 100%;
+    font-weight: 700;
+    font-size: 16vw;
+    line-height: 0.8;
+    text-align: center;
+    letter-spacing: -0.02em;
+    background: linear-gradient(to top, transparent, #ffffff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 900px){
+    .footer-columns{ grid-template-columns: 1fr; gap: 40px; text-align: left; }
+    .footer-link{ max-width: none; justify-content: flex-start; }
+    .footer-link .arrow{ margin-left: 8px; }
+    .footer-wordmark{ font-size: 20vw; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .card-nav *, .card-nav{ transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card-nav-wrap">
+  <nav class="card-nav" id="cardNav">
+    <div class="card-nav-top">
+      <div class="cn-logo">
+        <img src="assets/logo.png" alt="Squarre" class="cn-logo-mark">
+        Squarre
+      </div>
+      <div class="cn-actions">
+        <button class="cn-cta">Get started</button>
+        <button class="cn-toggle" id="cnToggle" aria-label="Toggle menu" aria-expanded="false">
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="cn-panel">
+      <div class="cn-panel-inner">
+        <div class="cn-panel-content">
+          <div class="cn-col" style="background-image:url('images/product.jpg')">
+            <div class="cn-col-inner">
+              <div class="cn-col-label">Product</div>
+              <a class="cn-link" href="#">Overview <span class="arrow">↗</span></a>
+              <a class="cn-link" href="#">Pricing <span class="arrow">↗</span></a>
+              <a class="cn-link" href="#">Changelog <span class="arrow">↗</span></a>
+            </div>
+          </div>
+          <div class="cn-col" style="background-image:url('images/company.jpg')">
+            <div class="cn-col-inner">
+              <div class="cn-col-label">Company</div>
+              <a class="cn-link" href="#">About <span class="arrow">↗</span></a>
+              <a class="cn-link" href="#">Careers <span class="arrow">↗</span></a>
+              <a class="cn-link" href="#">Contact <span class="arrow">↗</span></a>
+            </div>
+          </div>
+          <div class="cn-col" style="background-image:url('images/resources.jpg')">
+            <div class="cn-col-inner">
+              <div class="cn-col-label">Resources</div>
+              <a class="cn-link" href="#">Docs <span class="arrow">↗</span></a>
+              <a class="cn-link" href="#">Blog <span class="arrow">↗</span></a>
+              <a class="cn-link" href="#">Support <span class="arrow">↗</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<main>
+
+  <section class="about-intro">
+    <div class="about-intro-inner">
+      <h1 class="about-title">Obsessed with great products</h1>
+      <p class="about-lede">Every business starts with someone who refused to settle for average — this is the story of the person building the tools so the next one doesn't have to start from scratch.</p>
+    </div>
+  </section>
+
+  <div class="about-image-wrap">
+    <img src="assets/me.jpg" alt="Thube Zulu">
+  </div>
+
+  <section class="about-bio">
+    <h2 class="about-bio-title">Hi, I'm Thube Zulu, multi-award winning business developer &amp; digital specialist.</h2>
+    <p class="about-bio-desc">I am a 22 year old BHSc graduate with a passion for building solutions that drive success. While my degree is not related to my passion, I didn't let that stop me. From a very young age, I set out to pursue what I am passionate about. I've learned different skills across multiple domains, spanning entrepreneurship, business development, marketing, communications, macroeconomics, finance, 3D design, software and web development, psychology, consumer studies, and graphic design. With over 6 years experience building professional products and services, I've won multiple titles and awards, and still continue to grow.</p>
+  </section>
+
+  <section class="skills-section">
+    <h2 class="skills-title">My skills</h2>
+    <div class="skills-grid">
+      <div class="skills-col">
+        <span>Entrepreneurship</span>
+        <span>Business Development</span>
+        <span>Strategic Planning</span>
+        <span>Macroeconomics</span>
+      </div>
+      <div class="skills-col">
+        <span>Personal Finance</span>
+        <span>Consumer Studies</span>
+        <span>Market Research</span>
+        <span>Psychology</span>
+      </div>
+      <div class="skills-col">
+        <span>Graphic Design</span>
+        <span>3D Design</span>
+        <span>UI/UX Design</span>
+        <span>Brand Identity</span>
+      </div>
+      <div class="skills-col">
+        <span>Web Development</span>
+        <span>Software Development</span>
+        <span>Marketing</span>
+        <span>Communications</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="templates-section">
+    <h2 class="templates-title">This platform and all templates were built by me</h2>
+    <a href="index.html" class="templates-btn">See the platform</a>
+
+    <div class="templates-grid">
+      <a class="template-item" href="https://zarmilli.github.io/elhnon/" target="_blank" rel="noopener">
+        <div class="template-card" style="background-image:url('templates/elhnon.jpg')"></div>
+        <span class="template-name">Elhnon Odnufmon</span>
+      </a>
+      <a class="template-item" href="https://zarmilli.github.io/kickhouse/" target="_blank" rel="noopener">
+        <div class="template-card" style="background-image:url('templates/kickhouse.jpg')"></div>
+        <span class="template-name">Kickhouse</span>
+      </a>
+      <a class="template-item" href="https://zarmilli.github.io/maisonco/" target="_blank" rel="noopener">
+        <div class="template-card" style="background-image:url('templates/maisonco.jpg')"></div>
+        <span class="template-name">Christopher</span>
+      </a>
+      <a class="template-item" href="https://zarmilli.github.io/lumiere/" target="_blank" rel="noopener">
+        <div class="template-card" style="background-image:url('templates/lumiere.jpg')"></div>
+        <span class="template-name">Lumiere Studio</span>
+      </a>
+      <a class="template-item" href="https://zarmilli.github.io/voltcycle/" target="_blank" rel="noopener">
+        <div class="template-card" style="background-image:url('templates/voltcycle.jpg')"></div>
+        <span class="template-name">Voltcycle</span>
+      </a>
+      <a class="template-item" href="https://zarmilli.github.io/belle/" target="_blank" rel="noopener">
+        <div class="template-card" style="background-image:url('templates/belle.jpg')"></div>
+        <span class="template-name">Belle Pastisserie</span>
+      </a>
+      <a class="template-item" href="https://zarmilli.github.io/Aperture/" target="_blank" rel="noopener">
+        <div class="template-card" style="background-image:url('templates/aperture.jpg')"></div>
+        <span class="template-name">Aperture Studio</span>
+      </a>
+      <a class="template-item" href="https://zarmilli.github.io/christopher/" target="_blank" rel="noopener">
+        <div class="template-card" style="background-image:url('templates/christopher.jpg')"></div>
+        <span class="template-name">Christopher</span>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" data-theme="dark">
+  <div class="footer-columns">
+    <div class="footer-col footer-col-brand">
+      <h3 class="footer-brand-title">Dream it,<br>Build it</h3>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-label">Product</div>
+      <a class="footer-link" href="#">Overview <span class="arrow">↗</span></a>
+      <a class="footer-link" href="#">Pricing <span class="arrow">↗</span></a>
+      <a class="footer-link" href="#">Changelog <span class="arrow">↗</span></a>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-label">Company</div>
+      <a class="footer-link" href="#">About <span class="arrow">↗</span></a>
+      <a class="footer-link" href="#">Careers <span class="arrow">↗</span></a>
+      <a class="footer-link" href="#">Contact <span class="arrow">↗</span></a>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-label">Resources</div>
+      <a class="footer-link" href="#">Docs <span class="arrow">↗</span></a>
+      <a class="footer-link" href="#">Blog <span class="arrow">↗</span></a>
+      <a class="footer-link" href="#">Support <span class="arrow">↗</span></a>
+    </div>
+  </div>
+
+  <div class="footer-wordmark">SQUARREDESK</div>
+</footer>
+
+<script>
+  const nav = document.getElementById('cardNav');
+  const toggle = document.getElementById('cnToggle');
+
+  toggle.addEventListener('click', () => {
+    const isOpen = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+</script>
+
+</body>
+</html>
