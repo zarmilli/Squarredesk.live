@@ -97,3 +97,17 @@ document.querySelectorAll('.counter-number').forEach((el) => {
     });
   });
 })();
+
+(function(){
+  const banner = document.getElementById('devBanner');
+  const closeBtn = document.getElementById('devBannerClose');
+
+  if (localStorage.getItem('devBannerDismissed') === 'true') {
+    banner.style.display = 'none';
+  }
+
+  closeBtn.addEventListener('click', () => {
+    banner.style.display = 'none';
+    localStorage.setItem('devBannerDismissed', 'true');
+  });
+})();
