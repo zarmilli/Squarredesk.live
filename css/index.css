@@ -1160,3 +1160,62 @@
   .footer-link .arrow{ margin-left: 8px; }
   .footer-wordmark{ font-size: 20vw; }
 }
+
+.dev-banner{
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: calc(100% - 32px);
+  background: #14110a;
+  color: #f5f3ee;
+  padding: 14px 16px 14px 20px;
+  border-radius: 14px;
+  box-shadow: 0 20px 40px -16px rgba(0,0,0,0.5);
+  font-family: var(--font-body);
+}
+
+.dev-banner-text{
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.dev-banner-link{
+  color: var(--gold);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  margin-left: 4px;
+}
+.dev-banner-link:hover{ color: #e2c07f; }
+
+.dev-banner-close{
+  appearance: none;
+  border: none;
+  background: rgba(255,255,255,0.08);
+  color: #f5f3ee;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.25s var(--ease);
+}
+.dev-banner-close:hover{ background: rgba(255,255,255,0.16); }
+
+@media (max-width: 640px){
+  .dev-banner{
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    transform: none;
+    max-width: none;
+  }
+}
