@@ -731,12 +731,13 @@
   border-radius: 10px;
   object-fit: cover;
   margin-bottom: 24px;
+  margin-top: 30px;
 }
 
 .community-title{
-  font-family: var(--font-heading);
-  font-size: clamp(28px, 3.6vw, 38px);
-  font-weight: 700;
+  font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: var(--titles);
   letter-spacing: -0.02em;
   line-height: 1.2;
   max-width: 640px;
@@ -775,7 +776,7 @@
 }
 
 .community-card-title{
-  font-family: var(--font-heading);
+  font-family: "Inter", sans-serif;
   font-size: 22px;
   font-weight: 700;
   letter-spacing: -0.01em;
@@ -970,9 +971,9 @@
 }
 
 .final-cta-title{
-  font-family: var(--font-heading);
-  font-size: clamp(32px, 5vw, 52px);
-  font-weight: 700;
+  font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: var(--titles);
   letter-spacing: -0.02em;
   color: #000;
   margin: 0;
