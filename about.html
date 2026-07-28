@@ -13,6 +13,7 @@
     --gold: #d4af62;
     --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
     --font-heading: "Clarkson", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --titles: 46px;
   }
 
   @font-face{
@@ -230,7 +231,7 @@
 
   /* ---------- About: intro ---------- */
   .about-intro{
-    padding: 200px 24px 60px;
+    padding: 200px 300px 60px;
     display: flex;
     justify-content: flex-end;
   }
@@ -239,8 +240,9 @@
     text-align: right;
   }
   .about-title{
-    font-size: clamp(32px, 5vw, 52px);
-    font-weight: 700;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: var(--titles);
     letter-spacing: -0.02em;
     color: #14110a;
     margin: 0 0 20px;
@@ -263,7 +265,7 @@
     width: 100%;
     height: auto;
     display: block;
-    border-radius: 20px;
+    border-radius: 10px;
   }
 
   /* ---------- About: bio ---------- */
@@ -276,8 +278,9 @@
     gap: 60px;
   }
   .about-bio-title{
-    font-size: clamp(24px, 3vw, 32px);
-    font-weight: 700;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: var(--titles);
     letter-spacing: -0.01em;
     line-height: 1.3;
     color: #14110a;
@@ -299,8 +302,9 @@
   }
   .skills-title{
     text-align: center;
-    font-size: clamp(24px, 3vw, 32px);
-    font-weight: 700;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: var(--titles);
     letter-spacing: -0.01em;
     color: #14110a;
     margin: 0 0 56px;
@@ -331,8 +335,9 @@
     text-align: center;
   }
   .templates-title{
-    font-size: clamp(24px, 3vw, 32px);
-    font-weight: 700;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: var(--titles);
     letter-spacing: -0.01em;
     color: #14110a;
     max-width: 560px;
@@ -366,7 +371,7 @@
 
   .template-card{
     aspect-ratio: 16 / 9;
-    border-radius: 16px;
+    border-radius: 6px;
     background-size: cover;
     background-position: top center;
     box-shadow: 0 20px 40px -20px rgba(20,17,10,0.3);
@@ -525,7 +530,7 @@
   <section class="about-intro">
     <div class="about-intro-inner">
       <h1 class="about-title">Obsessed with great products</h1>
-      <p class="about-lede">Every business starts with someone who refused to settle for average — this is the story of the person building the tools so the next one doesn't have to start from scratch.</p>
+      <p class="about-lede">Every business starts with someone who refused to settle for average, this is the story of the person building the tools so the next one doesn't have to start from scratch.</p>
     </div>
   </section>
 
@@ -574,35 +579,35 @@
 
     <div class="templates-grid">
       <a class="template-item" href="https://zarmilli.github.io/elhnon/" target="_blank" rel="noopener">
-        <div class="template-card" style="background-image:url('templates/elhnon.jpg')"></div>
+        <div class="template-card" style="background-image:url('assets/elhnon.png')"></div>
         <span class="template-name">Elhnon Odnufmon</span>
       </a>
       <a class="template-item" href="https://zarmilli.github.io/kickhouse/" target="_blank" rel="noopener">
-        <div class="template-card" style="background-image:url('templates/kickhouse.jpg')"></div>
+        <div class="template-card" style="background-image:url('assets/kick.png')"></div>
         <span class="template-name">Kickhouse</span>
       </a>
       <a class="template-item" href="https://zarmilli.github.io/maisonco/" target="_blank" rel="noopener">
-        <div class="template-card" style="background-image:url('templates/maisonco.jpg')"></div>
+        <div class="template-card" style="background-image:url('assets/maison.png')"></div>
         <span class="template-name">Christopher</span>
       </a>
       <a class="template-item" href="https://zarmilli.github.io/lumiere/" target="_blank" rel="noopener">
-        <div class="template-card" style="background-image:url('templates/lumiere.jpg')"></div>
+        <div class="template-card" style="background-image:url('assets/lumi.png')"></div>
         <span class="template-name">Lumiere Studio</span>
       </a>
       <a class="template-item" href="https://zarmilli.github.io/voltcycle/" target="_blank" rel="noopener">
-        <div class="template-card" style="background-image:url('templates/voltcycle.jpg')"></div>
+        <div class="template-card" style="background-image:url('assets/volt.png')"></div>
         <span class="template-name">Voltcycle</span>
       </a>
       <a class="template-item" href="https://zarmilli.github.io/belle/" target="_blank" rel="noopener">
-        <div class="template-card" style="background-image:url('templates/belle.jpg')"></div>
+        <div class="template-card" style="background-image:url('assets/belle.png')"></div>
         <span class="template-name">Belle Pastisserie</span>
       </a>
       <a class="template-item" href="https://zarmilli.github.io/Aperture/" target="_blank" rel="noopener">
-        <div class="template-card" style="background-image:url('templates/aperture.jpg')"></div>
+        <div class="template-card" style="background-image:url('assets/aperture.png')"></div>
         <span class="template-name">Aperture Studio</span>
       </a>
       <a class="template-item" href="https://zarmilli.github.io/christopher/" target="_blank" rel="noopener">
-        <div class="template-card" style="background-image:url('templates/christopher.jpg')"></div>
+        <div class="template-card" style="background-image:url('assets/chris.png')"></div>
         <span class="template-name">Christopher</span>
       </a>
     </div>
